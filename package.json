@@ -1,0 +1,24 @@
+{
+  "name": "rest-api-crud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node ./server.js",
+    "start:dev": "nodemon ./server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "joi": "^17.12.1",
+    "mysql2": "^3.9.1",
+    "rootpath": "^0.1.2",
+    "sequelize": "^6.36.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
