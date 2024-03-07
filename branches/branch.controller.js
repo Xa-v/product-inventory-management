@@ -9,6 +9,7 @@ const branchService = require("./branch.service");
 module.exports = router;
 
 router.get("/", getAllBranch);
+router.get("/:id", getbyID);
 router.post("/", createBranch, create);
 router.put("/:id", updateSchema, update);
 router.delete("/:id", _delete);
@@ -21,6 +22,11 @@ function getAllBranch(req, res, next) {
     .catch(next);
 }
 
+function getbyID(req, res, next) {
+  branchService.getBranch(req.params.id)
+      .then(user => res.json(user))
+      .catch(next)
+}
 
 function create(req, res, next) {
     branchService
