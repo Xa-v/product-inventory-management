@@ -12,6 +12,7 @@ router.get('/',ViewProducts);
 router.get('/:id', getById);
 router.post('/', createSchema, create);
 router.put('/:id', updateSchema, update);
+router.get("/:id/availability", checkStockAvailability); // Get Product by ID
 
 module.exports = router;
 async function ViewProducts(req, res, next) {
@@ -88,3 +89,13 @@ function updateSchema(req, res, next) {
     });
     validateRequest(req, next, schema);
 }
+
+async function checkStockAvailability(req, res, next) {
+    const {role} = req.query;
+    try {
+      const product = await productService.checkStockAvailability(req.params.id, role);
+      res.json(product);
+    } catch (error) {
+      next(error);
+    }
+  }
