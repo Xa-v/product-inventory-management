@@ -11,14 +11,22 @@ module.exports = {
 };
 
 async function getAll() {
-    return await db.Branches.findAll();
+  return await db.Branches.findAll({
+    attributes: ["id", "name", "location"],
+  });
+
+
   }
 
+ 
   async function getBranch(id) {
-    const branch = await db.Branches.findByPk(id);
+    const branch = await db.Branches.findByPk(id, {
+        attributes: ['id', 'name', 'location'] 
+    });
     if (!branch) throw "branch not found";
     return branch;
-  }
+}
+
 
 
   async function create(params) {
