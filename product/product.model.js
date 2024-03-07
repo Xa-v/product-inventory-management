@@ -7,6 +7,7 @@ function model(sequelize) {
         productname: { type: DataTypes.STRING, allowNull: false },
         price: { type: DataTypes.INTEGER, allowNull: false },
         productcategory:{type: DataTypes.STRING, allowNull: false} ,
+        stockavailable:{ type:DataTypes.INTEGER, allowNull:false,defaultValue: 0}
     
     };
 
