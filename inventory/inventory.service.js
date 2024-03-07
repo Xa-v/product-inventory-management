@@ -32,12 +32,12 @@ async function createNewInventory(params, role) {
 
   // Update product stock based on the operation
   if (stockIn) {
-    product.productStocks += stockIn;
+    product.stockavailable += stockIn;
   } else if (stockOut) {
-    if (product.productStocks < stockOut) {
+    if (product.stockavailable < stockOut) {
       throw new Error("Insufficient stock");
     }
-    product.productStocks -= stockOut;
+    product.stockavailable -= stockOut;
   } else {
     throw new Error("Error: Please add value to the stocks");
   }
@@ -58,10 +58,8 @@ async function viewInventory({role}) {
   authorize(role, [Role.Admin, Role.Manager]);
 
   const products = await db.Product.findAll({
-    where: {
-      isActive: true,
-    },
-    attributes: ["id", "productName", "productStocks"],
+  
+    attributes: ["id", "productname", "stockavailable"],
   });
 
   if (products.length === 0) {

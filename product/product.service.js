@@ -8,7 +8,8 @@ module.exports = {
     ViewProducts,
     getById,
     create,
-    update
+    update,
+    checkStockAvailability
   
 
     
@@ -52,6 +53,19 @@ async function update({role},id, params) {
     Object.assign(product, params);
     await product.save();
 }
+
+
+async function checkStockAvailability(id, role) {
+    authorize(role, [Role.Customer]);
+  
+    const product = await db.Product.findByPk(id);
+  
+    if (!product) throw "Product not found";
+  
+    return await db.Product.findByPk(id, {
+        attributes: ["productname", "stockavailable"],
+      });
+  }
 
 function authorize(role, allowedRoles) {
     if ( !role || !allowedRoles.map((r) => r.toLowerCase()).includes(role.toLowerCase()) ) {
