@@ -68,7 +68,7 @@ async function getAll() {
 
   async function _delete(id) {
     const branch = await getBranch(id);
-    await branch.destroy();
+    await branch.save();
   }
   
 
