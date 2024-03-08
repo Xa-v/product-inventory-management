@@ -13,19 +13,26 @@ module.exports = {
 async function getAll() {
   return await db.Branches.findAll({
     attributes: ["id", "name", "location"],
+    where: {
+      status: "active"
+    }
+  });
+}
+
+async function getBranch(id) {
+  const branch = await db.Branches.findByPk(id, {
+      attributes: ['id', 'name', 'location', 'status']
   });
 
+  if (!branch) throw "Branch not found";
 
+  if (branch.status === 'inactive') {
+      throw "Branch deleted";
   }
 
- 
-  async function getBranch(id) {
-    const branch = await db.Branches.findByPk(id, {
-        attributes: ['id', 'name', 'location'] 
-    });
-    if (!branch) throw "branch not found";
-    return branch;
+  return branch;
 }
+
 
 
 
@@ -68,7 +75,7 @@ async function getAll() {
 
   async function _delete(id) {
     const branch = await getBranch(id);
-    await branch.destroy();
+    await branch.save();
   }
   
 
