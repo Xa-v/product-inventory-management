@@ -12,7 +12,7 @@ router.get("/", getAllBranch);
 router.get("/:id", getbyID);
 router.post("/", createBranch, create);
 router.put("/:id", updateSchema, update);
-router.delete("/:id", _delete);
+router.put("/:id/delete", DeleteSchema, _delete);
 router.post("/:branchId/assign/:userId", assignUserToBranch);
 
 function getAllBranch(req, res, next) {
@@ -66,11 +66,18 @@ function create(req, res, next) {
 
   function _delete(req, res, next) {
     branchService
-      .delete(req.params.id)
+    .update(req.params.id, req.body)
       .then(() => res.json({ message: "Branch deleted" }))
       .catch(next);
   }
   
+  function DeleteSchema(req, res, next) {
+    const schema = Joi.object({
+        status: Joi.string().empty("").default("false")
+    });
+    validateRequest(req, next, schema);
+}
+
 
   function assignUserToBranch(req, res, next) {
     branchService
