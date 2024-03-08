@@ -73,7 +73,7 @@ function create(req, res, next) {
   
   function DeleteSchema(req, res, next) {
     const schema = Joi.object({
-        status: Joi.string().empty("").default("false")
+        status: Joi.string().empty("").default("inactive")
     });
     validateRequest(req, next, schema);
 }
